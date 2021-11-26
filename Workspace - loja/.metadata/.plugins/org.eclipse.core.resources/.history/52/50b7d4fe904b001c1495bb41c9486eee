@@ -1,0 +1,29 @@
+package br.com.loja.testes;
+
+import java.math.BigDecimal;
+
+import javax.persistence.EntityManager;
+
+import br.com.loja.dao.DAO;
+import br.com.loja.modelo.Produto;
+import br.com.loja.util.JPAUtil;
+
+public class CadastroDeProdutos {
+
+	public static void main(String[] args) {
+		
+		Produto notebook = new Produto();
+		
+		notebook.setName("Dell");
+		notebook.setDescrição("32 giga de RAM");
+		notebook.setPreco(new BigDecimal(6700));
+		
+		EntityManager em = JPAUtil.getEntityManager();
+		DAO dao = new DAO(em);
+		
+		em.getTransaction().begin();
+		dao.cadastrarProduto(notebook);
+		em.getTransaction().commit();
+		em.close();
+	}
+}
